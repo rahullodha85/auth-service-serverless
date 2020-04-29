@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Timeout: 3
+    Runtime:
+      Ref: FunctionsRuntime
+
+Parameters:
+  FunctionsRuntime:
+    Type: String
+    Default: python3.7
+
+Resources:
+  AuthApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+
+  Index:
+    Type: AWS::Serverless::Function
+    Properties:
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
+            RestApiId:
+              Ref: AuthApi
+      Handler: index.handler
+      CodeUri: index/
+
+  Login:
+    Type: AWS::Serverless::Function
+    Properties:
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /login
+            Method: POST
+            RestApiId:
+              Ref: AuthApi
+      Handler: app.lambda_handler
+      CodeUri: login/

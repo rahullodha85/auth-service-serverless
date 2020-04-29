@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "auth-service"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-178wp2q31pova"
+s3_prefix = "auth-service"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "FunctionsRuntime=\"python3.7\""
+
